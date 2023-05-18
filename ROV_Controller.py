@@ -240,11 +240,7 @@ def Start_Button():
     if ctrlr.get_button(START_BTN) == 1:
         return 1
     else:
-        return 0
-    
-def Back_Button():
-    pygame.event.pump()
-    return ctrlr.get_button(BACK_BTN)
+        return 0    
 
 def Sprint_Button():
     pygame.event.pump()

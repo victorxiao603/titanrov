@@ -2,9 +2,7 @@ import ROV_Camera
 import ROV_Controller
 import ROV_Thruster
 import ROV_Arm
-import ROV_LED
 #import ROV_OpenCV_Camera
-import RPi.GPIO as IO          #calling header file which helps us use GPIO’s of PI
 from time import sleep
 
 NUETRAL = 1500
@@ -39,10 +37,6 @@ def main():
     ROV_Arm.Init()
     print("Claw initialization success\n")
     
-    
-    ROV_LED.Init()
-    print("Led initialization success\n")
-    
     # Checks if the center Xbox button was being pressed
     if (ROV_Controller.XBox_Button() == 1):
         print("Calibrating motors (Incoming beeping noises)")
@@ -50,14 +44,13 @@ def main():
         print("Motor calibration sucess\n")
     
     print("Initializing camera")
-    #ROV_Camera.Init() 
+    ROV_Camera.Init() 
     print("Camera initialization success\n")
     
-    #ROV_Camera.UpdateOverlay()
+    ROV_Camera.UpdateOverlay()
     
     # Main loop
     end_btn = 0
-    LED_on = 0
     while end_btn == 0:
         
         sleep(0.1) #time difference between each loop
@@ -82,19 +75,15 @@ def main():
                 ROV_Thruster.Output(i,NUETRAL)
             print("")
         
-        if (ROV_Controller.Back_Button()):
-            ROV_LED.change_brightness()
-        
         if (ROV_Controller.X_Button()):
             ROV_Camera.UpdateOverlay()
-    
         
         # If the back button is pressed the program ends
         end_btn = ROV_Controller.Y_Button()
     
     # End main loop
     print("Ending program")
-    #ROV_Camera.End()
+    ROV_Camera.End()
     ROV_Thruster.End()
     ROV_Arm.End()
     
@@ -102,4 +91,4 @@ def main():
     print("Program ended sucessfully")
     
 if __name__ == "__main__":
-    main() 
+    main()
